@@ -1,0 +1,254 @@
+Changelog:
+
+ 3.2.2 : Fix: Dualdownloaders broker since 3.2. NO CLUE why cause
+              I havent touched that part, but its ok now anyway.
+              Thanks DevilR for finding this one as well.
+
+ Upgrading from 3.2.1: Replace ktmf.sh
+
+----------------------------------------------------------------
+
+ 3.2.1 : Fix: If FOLDEEX was not defined, group excludes didnt
+              work. With that note, this script needs a rewrite =)
+              Thanks DevilR for finding it.
+
+ Upgrading from 3.2: Replace ktmf.sh
+
+----------------------------------------------------------------
+
+ 3.2   : Add: If you use LOCKFILE it will be automatically
+              removed once it is 60 minutes old. That way the
+              script will fix itself if the lockfile is left 
+              behind because of a reboot.
+
+----------------------------------------------------------------
+
+ 3.1.6 : Fix: When checking if it should ban slow uploaders
+              (BANUL=TRUE/FALSE), it actually checked the BAN
+              option which is the same thing but for slow 
+              downloaders.
+
+              Thanks fnx
+
+              You can fix this yourself if you want. Go to line
+              2017 of v3.1.5 and change the $BAN to $BANUL
+
+ Upgrading from 3.1.5: Replace ktmf.sh
+
+ Note: This script is getting old and well tested. I hardly know
+ myself what some parts actually do cause I havent touched it
+ in a long time. So, it will most likely not get the improvements
+ some of you asked for. Sorry folks, but I feel this to be a 
+ pretty complete script as is =(
+          
+----------------------------------------------------------------
+
+ 3.1.5 : Fix: It had problems dealing with -NEW- connections before
+              the user logged in. It would, of course, give a grep
+              error.
+              It will now define -NEW- users as NotLoggedIn. Idle
+              kicker will kick those connections too now. Any 
+              punishment for idling will not be enforced due to
+              the fact that we have no clue who this is yet. So it
+              will simple kick them.
+              Thanks to nm0 for reporting this !
+
+ Upgrading from 3.1.4: Replace ktmf.sh
+
+----------------------------------------------------------------
+
+ 3.1.4 : Fix: Slow download kicks announces a crippled warning instead of
+              the "kicked" line.
+              It sent KTMFSLDW instead of KTMFSLD when sending it to
+              glftpd.log on line 1740.
+              Thanks Peza for reporting it a long time ago and corzel to
+              tell be what the problem was ( It was too easy, so I never
+              found it myself =))
+
+ Upgrading from 3.1.3: Replace ktmf.sh
+
+----------------------------------------------------------------
+
+ 3.1.3 : Fix: Finally had the error myself from GENKICK so:
+              Fixed it where GENKICK would kick people not having
+              leech or wasnt in any of the kickgroups. Bloody 
+              annoying error that has been eluding me.
+
+ Upgrading from 3.1.2: Replace ktmf.sh.
+
+ 3.1.2 : Fix: Some people had problems with the generic kicker.
+              Apparently kicked users without leech and users that
+              were uploading. I rewrote some parts of it, but not
+              sure if it helped since I never encountered it myself.
+         Fix: Minor: Said SLOWUL: instead of GENKICK: at one place
+              in the log. Its the cut and paste monster, ahhh !!
+ 
+ Upgrading from 3.1.1: Only changes in ktmf.sh, so use old config.
+
+ 3.1.1 : Fix: Some had problems with kicks even though users
+              were in their predirs. Worked fine for me, but
+              added another check to be sure.
+
+ Upgrading from 3.1 : Only changes in ktmf.sh, so use old config.
+
+ 3.1   : Add: Moved the configuration to ktmf.conf 
+         Add: Some peoples zipscripts did not clear
+              incomplete files when kicking from Slow Upload  
+              and Dual Upload modules, leaving a half empty   
+              file there.                                     
+              KTMF will now check if the file(s) the user was 
+              uploading exists, and if so, delete them and    
+              undupe them.                                    
+              Setting UNDUPE to "" will disable undupe, and   
+              KTMF will only try and remove the files.
+
+              NOTE: Some people have problems with the undupe file
+                    that came pre-compiled for linux with glftpd 1.27.
+                    Try running it from shell. If you do NOT get the 
+                    "USEAGE:" (yes it really says that, lol) help, then
+                    compile it from the source that came with the glftpd
+                    package, and replace your current undupe file.
+
+
+              New settings in the config, since last version, will 
+              from now on be marked with a <--    
+ 
+ Upgrading from 3.0 : Copy the settings to a file called ktmf.conf
+                      Replace ktmf.sh
+                      Add to the settings at the top of your existing 
+                      config file:
+                      GLROOT=/glftpd                                  
+                      UNDUPE=/glftpd/bin/undupe                       
+                      UNDUPEUSER=glftpd                               
+                      -- Make sure the user have flag C for undupe.      
+                                                              
+ 3.0.1 : Fix: If you did not have any users excluded, only    
+              groups, it would start the exclude list with a  
+              | sign, thus excluding everyone.                
+              Thanks to Web for finding it, although I still  
+              think its a Slackware problem !! =)             
+         Upd: No config changes this time (Upd = Updating).   
+
+ 3.0   : Add: Rewrote how it checks for excluded users by     
+              groups, making it about 800% faster at that.    
+              This makes GEXCLUDEON obselete, but I'll keep   
+              in anyway for backwards compability.            
+              Plus it saves about 1 second if you want it off 
+      -> Add: Changed all the bot outputs to comply with the  
+              generic way of doing them. I have included docs 
+              for how to get them to work with Dark0n3s       
+              zipscript-c. This also means that it is much    
+              easier for you if you wish to change the output 
+              text. If you are upgrading, make sure to read   
+              the README on how it works now.                 
+              BOTTRIGGER option removed as it has no purpose  
+              anymore.                                        
+      -> Add: Added a new module. General Kick. See README.   
+      -> Add: Added a new module. Slow upload. See README.    
+         Add: Remade how it restores tempban. Instead of      
+              making a backup of the unedited userfile, I now 
+              simply add a 6 to the flags when tempbanning    
+              and removing any 6 when restoring tempban.      
+              This means that a user can be logged on twice,  
+              and only the pid that was breaking the rule     
+              is kicked instead of both of them. Of course,   
+              should he log out with the logged in process,   
+              he cant log back in until the tempban is gone.  
+              This also means that the Fix in 2.1.2 is no     
+              longer needed and has been removed.             
+         Add: Added more debug output if you use PREEXCLUDE.  
+      -> Fix: Groups, like users, should now be seperated     
+              with a | instead of a space. Check your setup.  
+
+ 2.1.2 : Fix: If a user is in a prefolder, and at the same    
+              time idling or slow downloading somewhere else, 
+              he/she will be excluded from idling and slowdl. 
+              In short. The first module that finds him in a  
+              prefolder will exclude him from the rest of the 
+              modules.                                        
+              Update, this was removed in version 3.0         
+
+ 2.1.1 : Fix: Something weird happened so it didnt kick slow  
+              downloaders. Not sure what it was but I think   
+              I fixed it.                                     
+
+ 2.1   : Add: For those of you who feel that the PREFOLDERS   
+              setting is not secure enough, I added           
+              PREEXCLUDE. Add all your pre folders here and   
+              the script will automatically exclude all       
+              groups found in those folders, like in my trial 
+              scripts.                                        
+              This makes PREFOLDERS kinda worthless, but I    
+              like to punish my affils when they are NOT in   
+              their pre folders, so I'll keep it anyway.      
+
+ 2.0.1 : Fix: DualUp. Would say the wrong path they were dual 
+              upping in sometimes.                            
+       : Fix: If DEBUG was not true, it waited DELAYDUALUP    
+              seconds even if there were no dual uploaders.   
+
+ 2.0   : Add: Added the dual upload module. See README.       
+         Add: Added LOG. Some people apparently wanted it so  
+              here it is. It will log all kicks and whatever  
+              it does to its own logfile. Disable totally by  
+              setting LOG=""                                  
+         Add: Added a verification check before kicking or    
+              announcing. This should eliminate any misfires  
+              you might have seen in the past.                
+         Add: Some more initial info when running DEBUG mode. 
+         Add: If you run this with 'ktmf.sh test', it will    
+              set DEBUG, TEST and SHOWEXCLUDES to TRUE, no    
+              matter what they are set to in the script. Good 
+              if you want to test it from shell, but are too  
+              lazy to change them to TRUE in the script.      
+         Fix: Sometimes it counted the number of users wrong, 
+              resulting in kicks or whatever when there were  
+              less users on site then specified.              
+              It could also cause weird results, such as      
+              trying to kick parts of a filename or command.  
+
+ 1.2   : Fix: Exclude error again. Should be the last one.    
+         Add: Ability to exclude users who are in pre dirs.   
+              This requires the new tur-ftpwho to work!       
+
+ 1.1.1 : Fix: Minor error. If debug was FALSE, it waited for  
+              DELAYDUALDL even if it did not find anyone dual 
+              downloading.                                    
+         Add: Added possibility to set KILLGHOST="" to        
+              disable the function totally.                   
+         Add: If DEBUG and SHOWEXCLUDES are TRUE, it will     
+              make a nicer output of excluded users.          
+
+ 1.1   : Add: LIMITTODUALKICK. You can now set a usercount    
+              that must be on the site before it starts to    
+              kick for dual downloading, like for the others. 
+         Add: Added BANDUAL to Dual Downloading so you can    
+              give users a tempban there too. Of course,      
+              DUALBANTIME comes with that one too.            
+         Fix: If Temp banning is enabled on any of the        
+              functions, it will find ALL pids of a user and  
+              kick them all. Why?:                            
+              Say that hes slowdownloading and are uploading  
+              in another thread.                              
+              Before, if he was tempbanned, he could still    
+              upload on the other thread. Then when he was    
+              unbanned, everything he did in that time would  
+              be lost. Now the uploading thread will be       
+              kicked too, but only if tempbanning is enabled. 
+         Fix: Added some more checks to make sure it will run 
+         Fix: Fixed spelling errors in outputs and in README. 
+                                                              
+ 1.0.5 : Fix: If /glftpd/bin was not in the path, it did not  
+         find tur-ftpwho. Fixed by adding WHOBIN.             
+
+ 1.0.4 : Fix: Even more exclude merge problems fixed. hehe.   
+
+ 1.0.3 : Fix: Display bug if FOLDEREX was "".                 
+         Fix: More exclude merging problems fixes.            
+
+ 1.0.2 : Fix: Bug with userexcludes if GEXCLUDEON was FALSE.  
+         Does not cause locking if it cant find any folder.   
+
+ 1.0.1 : Just added FOLDEREX.                                 
+
+ 1.0   : Initial release. What you see is what you get.       
